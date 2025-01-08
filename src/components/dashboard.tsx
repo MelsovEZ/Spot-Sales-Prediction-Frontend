@@ -40,7 +40,7 @@ const PredictionDashboard = () => {
             try {
                 const predictions = await Promise.all(
                     AREAS.map(area =>
-                        fetch('http://localhost:8000/predict', {
+                        fetch('https://spot-sales-prediction-1.onrender.com/predict', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
