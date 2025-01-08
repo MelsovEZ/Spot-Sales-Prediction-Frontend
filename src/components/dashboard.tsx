@@ -161,16 +161,16 @@ const PredictionDashboard = () => {
             {/* Header Section */}
             <Card className="bg-white shadow">
               <CardContent className="p-6">
-                <div className="flex justify-between items-center">
-                  <h1 className="text-3xl font-bold text-gray-800">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-0">
+                  <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
                     I&apos;M&apos;s Prediction Dashboard
                   </h1>
-                  <div className="flex items-center gap-6">
+                  <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 w-full md:w-auto">
                     <Select
                       value={selectedRange}
                       onValueChange={setSelectedRange}
                     >
-                      <SelectTrigger className="w-36">
+                      <SelectTrigger className="w-full md:w-36">
                         <SelectValue placeholder="Select Range" />
                       </SelectTrigger>
                       <SelectContent>
@@ -182,7 +182,7 @@ const PredictionDashboard = () => {
                       </SelectContent>
                     </Select>
                     <motion.div
-                      className="text-lg"
+                      className="text-base md:text-lg"
                       initial={{ scale: 0.95 }}
                       animate={{ scale: 1 }}
                       transition={{ duration: 0.2 }}
@@ -192,7 +192,6 @@ const PredictionDashboard = () => {
                         {totalOrders.toLocaleString()}
                       </span>
                     </motion.div>
-                    <LogoutButton />
                   </div>
                 </div>
               </CardContent>
@@ -229,7 +228,7 @@ const PredictionDashboard = () => {
             className="space-y-6"
           >
             <motion.div {...fadeIn} transition={{ duration: 0.3, delay: 0.2 }}>
-              <TabsList className="grid grid-cols-5 w-full h-16 bg-white shadow-md rounded-lg p-1">
+              <TabsList className="grid grid-cols-1 sm:grid-cols-5 w-full h-full bg-white shadow-md rounded-lg py-4">
                 {AREAS.map((area) => (
                   <TabsTrigger
                     key={area}
@@ -363,6 +362,13 @@ const PredictionDashboard = () => {
               </TabsContent>
             ))}
           </Tabs>
+        </div>
+        <div className="mt-8">
+          <Card className="bg-gray-100 shadow-none border-none">
+            <CardContent className="flex justify-end p-0">
+              <LogoutButton />
+            </CardContent>
+          </Card>
         </div>
       </div>
     </motion.div>
