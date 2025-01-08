@@ -10,16 +10,16 @@ import { useState } from 'react';
 export const pageVariants = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -20 }
+  exit: { opacity: 0, y: -20 },
 };
 
 export const formVariants = {
   initial: { opacity: 0, scale: 0.95 },
-  animate: { 
-    opacity: 1, 
+  animate: {
+    opacity: 1,
     scale: 1,
-    transition: { duration: 0.3 }
-  }
+    transition: { duration: 0.3 },
+  },
 };
 
 export const inputVariants = {
@@ -27,8 +27,8 @@ export const inputVariants = {
   animate: (i: number) => ({
     x: 0,
     opacity: 1,
-    transition: { delay: i * 0.1 }
-  })
+    transition: { delay: i * 0.1 },
+  }),
 };
 
 export default function LoginPage() {
@@ -66,14 +66,11 @@ export default function LoginPage() {
       animate="animate"
       exit="exit"
     >
-      <motion.div 
+      <motion.div
         className="sm:mx-auto sm:w-full sm:max-w-md"
         variants={formVariants}
       >
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
+        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
           <Image
             src="/logo.svg?height=60&width=60"
             alt="I'M's Logo"
@@ -82,7 +79,7 @@ export default function LoginPage() {
             className="mx-auto"
           />
         </motion.div>
-        <motion.h2 
+        <motion.h2
           className="mt-6 text-center text-3xl font-extrabold text-gray-900"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -93,13 +90,16 @@ export default function LoginPage() {
       </motion.div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <motion.div 
+        <motion.div
           className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10"
           variants={formVariants}
         >
           <form className="space-y-6" onSubmit={handleSubmit}>
             <motion.div custom={0} variants={inputVariants}>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Username
               </label>
               <div className="mt-1">
@@ -114,7 +114,10 @@ export default function LoginPage() {
             </motion.div>
 
             <motion.div custom={1} variants={inputVariants}>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <div className="mt-1">
@@ -128,10 +131,7 @@ export default function LoginPage() {
               </div>
             </motion.div>
 
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <button
                 type="submit"
                 disabled={isLoading}
@@ -142,7 +142,7 @@ export default function LoginPage() {
             </motion.div>
           </form>
 
-          <motion.div 
+          <motion.div
             className="mt-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -157,7 +157,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <motion.div 
+            <motion.div
               className="mt-6"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}

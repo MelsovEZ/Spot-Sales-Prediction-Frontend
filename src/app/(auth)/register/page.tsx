@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { formVariants, inputVariants, pageVariants } from '../login/page';
 import Image from 'next/image';
-import Link from 'next/link'; 
+import Link from 'next/link';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -57,14 +57,11 @@ export default function RegisterPage() {
       animate="animate"
       exit="exit"
     >
-      <motion.div 
+      <motion.div
         className="sm:mx-auto sm:w-full sm:max-w-md"
         variants={formVariants}
       >
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
+        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
           <Image
             src="/logo.svg?height=60&width=60"
             alt="I'M's Logo"
@@ -73,7 +70,7 @@ export default function RegisterPage() {
             className="mx-auto"
           />
         </motion.div>
-        <motion.h2 
+        <motion.h2
           className="mt-6 text-center text-3xl font-extrabold text-gray-900"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -84,13 +81,16 @@ export default function RegisterPage() {
       </motion.div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <motion.div 
+        <motion.div
           className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10"
           variants={formVariants}
         >
           <form className="space-y-6" onSubmit={handleSubmit}>
             <motion.div custom={0} variants={inputVariants}>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Username
               </label>
               <div className="mt-1">
@@ -105,7 +105,10 @@ export default function RegisterPage() {
             </motion.div>
 
             <motion.div custom={1} variants={inputVariants}>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <div className="mt-1">
@@ -120,7 +123,10 @@ export default function RegisterPage() {
             </motion.div>
 
             <motion.div custom={2} variants={inputVariants}>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Confirm Password
               </label>
               <div className="mt-1">
@@ -134,10 +140,7 @@ export default function RegisterPage() {
               </div>
             </motion.div>
 
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <button
                 type="submit"
                 disabled={isLoading}
@@ -148,7 +151,7 @@ export default function RegisterPage() {
             </motion.div>
           </form>
 
-          <motion.div 
+          <motion.div
             className="mt-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -165,7 +168,7 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <motion.div 
+            <motion.div
               className="mt-6"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -183,4 +186,3 @@ export default function RegisterPage() {
     </motion.div>
   );
 }
-

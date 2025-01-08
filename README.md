@@ -19,26 +19,30 @@ provides analytics and insights into demand forecasts.
 ## Installation
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/MelsovEZ/Spot-Sales-Prediction-Frontend.git
-    cd Spot-Sales-Prediction-Frontend
-    ```
+
+   ```bash
+   git clone https://github.com/MelsovEZ/Spot-Sales-Prediction-Frontend.git
+   cd Spot-Sales-Prediction-Frontend
+   ```
 
 2. Install dependencies:
-    ```bash
-    npm install
-    ```
+
+   ```bash
+   npm install
+   ```
 
 3. Set up the environment: Create a `.env` file and add:
-    ```
-    DATABASE_URL=
-    NEXTAUTH_SECRET=
-    ```
+
+   ```
+   DATABASE_URL=
+   NEXTAUTH_SECRET=
+   ```
 
 4. Run the application:
-    ```bash
-    npm run dev
-    ```
+
+   ```bash
+   npm run dev
+   ```
 
 5. Access the app at `http://localhost:3000`.
 
