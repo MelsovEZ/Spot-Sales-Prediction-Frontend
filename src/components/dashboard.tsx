@@ -24,10 +24,10 @@ import {
 } from '@/components/select';
 import { PredictionResponse } from '@/types/dashboard-interfaces';
 import { motion } from 'framer-motion';
-import DailyOrderDrawer from '@/components/daily-drawer';
 import LogoutButton from './logout-button';
 import LoadingDashboard from './loading-dashboard';
 import ErrorDashboard from './error-dashboard';
+import InteractiveDailyOrdersChart from './daily-charts';
 
 const AREAS = [
   'Arcadia Bay',
@@ -330,35 +330,11 @@ const PredictionDashboard = () => {
                 </motion.div>
 
                 {/* Daily Summary */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
-                >
-                  <Card className="bg-white shadow-lg">
-                    <CardHeader className="border-b bg-gray-50 p-6">
-                      <CardTitle className="text-xl text-gray-800">
-                        Daily Order Summary - {area}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {Object.entries(areaData[area].daily_totals).map(
-                          ([date, total]) => (
-                            <DailyOrderDrawer
-                              key={date}
-                              date={date}
-                              total={total}
-                              predictions={areaData[area].predictions.filter(
-                                (p) => p.Date === date
-                              )}
-                            />
-                          )
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+                <InteractiveDailyOrdersChart
+                  area={area}
+                  dailyTotals={areaData[area].daily_totals}
+                  predictions={areaData[area].predictions}
+                />
               </TabsContent>
             ))}
           </Tabs>
