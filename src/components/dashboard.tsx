@@ -5,6 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/select";
 import { PredictionResponse } from '@/types/dashboard-interfaces';
+import { motion } from 'framer-motion';
 import DailyOrderDrawer from '@/components/daily-drawer';
 import LogoutButton from './logout-button';
 import LoadingDashboard from './loading-dashboard';
@@ -18,6 +19,12 @@ const TIME_RANGES = [
     { value: '2w', label: '2 Weeks' },
     { value: '1m', label: '1 Month' }
 ];
+
+const fadeIn = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 }
+};
 
 const PredictionDashboard = () => {
     const [areaData, setAreaData] = useState<Record<string, PredictionResponse>>({});
@@ -95,10 +102,17 @@ const PredictionDashboard = () => {
     const totalOrders = Object.values(areaData).reduce((sum, area) => sum + area.total_orders, 0);
 
     return (
+        <motion.div 
+            className="min-h-screen bg-gray-100 px-8 pb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+        >
         <div className="min-h-screen bg-gray-100 p-8">
             <div className="max-w-7xl mx-auto space-y-8">
+                <motion.div {...fadeIn} transition={{ duration: 0.3 }}>
                 {/* Header Section */}
-                <Card className="bg-white shadow-lg">
+                <Card className="bg-white shadow">
                     <CardContent className="p-6">
                         <div className="flex justify-between items-center">
                             <h1 className="text-3xl font-bold text-gray-800">I&apos;M&apos;s Prediction Dashboard</h1>
@@ -115,17 +129,24 @@ const PredictionDashboard = () => {
                                         ))}
                                     </SelectContent>
                                 </Select>
-                                <div className="text-lg">
+                                    <motion.div 
+                                        className="text-lg"
+                                        initial={{ scale: 0.95 }}
+                                        animate={{ scale: 1 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
                                     Total Orders: <span className="font-bold text-gray-900">{totalOrders.toLocaleString()}</span>
-                                </div>
+                                </motion.div>
                                 <LogoutButton />
                             </div>
                         </div>
                     </CardContent>
                 </Card>
+                </motion.div>
 
                 {/* Date Range Card */}
-                <Card className="bg-white shadow-lg">
+                <motion.div {...fadeIn} transition={{ duration: 0.3, delay: 0.1 }}>
+                <Card className="bg-white shadow">
                     <CardHeader className="border-b bg-gray-50 p-6">
                         <CardTitle className="text-xl text-gray-800">Date Range Information</CardTitle>
                     </CardHeader>
@@ -138,26 +159,35 @@ const PredictionDashboard = () => {
                         </p>
                     </CardContent>
                 </Card>
+                </motion.div>
 
                 {/* Area Tabs */}
                 <Tabs defaultValue={selectedArea} onValueChange={setSelectedArea} className="space-y-6">
-                    <TabsList className="grid grid-cols-5 w-full h-16 bg-white shadow-md rounded-lg p-1">
+                    <motion.div {...fadeIn} transition={{ duration: 0.3, delay: 0.2 }}>
+                        <TabsList className="grid grid-cols-5 w-full h-16 bg-white shadow-md rounded-lg p-1">
                         {AREAS.map(area => (
                             <TabsTrigger
                                 key={area}
                                 value={area}
-                                className="py-3 px-4 text-sm font-medium data-[state=active]:bg-gray-100 data-[state=active]:text-gray-900"
+                                className="mx-4 py-3 px-4 text-sm font-medium data-[state=active]:bg-gray-100 data-[state=active]:text-gray-900"
                             >
                                 {area}
                             </TabsTrigger>
                         ))}
                     </TabsList>
+                    </motion.div>
 
                     {AREAS.map(area => (
                         <TabsContent key={area} value={area} className="space-y-6 mt-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <motion.div 
+                                className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <motion.div {...fadeIn} transition={{ duration: 0.3 }}>
                                 {/* Category Chart */}
-                                <Card className="bg-white shadow-lg">
+                                <Card className="bg-white shadow-lg h-full">
                                     <CardHeader className="border-b bg-gray-50 p-6">
                                         <CardTitle className="text-xl text-gray-800">Total Orders by Category - {area}</CardTitle>
                                     </CardHeader>
@@ -185,9 +215,11 @@ const PredictionDashboard = () => {
                                         </div>
                                     </CardContent>
                                 </Card>
+                                </motion.div>
 
                                 {/* Order Type Chart */}
-                                <Card className="bg-white shadow-lg">
+                                <motion.div {...fadeIn} transition={{ duration: 0.3, delay: 0.1 }}>
+                                    <Card className="bg-white shadow-lg h-full">
                                     <CardHeader className="border-b bg-gray-50 p-6">
                                         <CardTitle className="text-xl text-gray-800">Dining vs Takeaway Orders - {area}</CardTitle>
                                     </CardHeader>
@@ -210,9 +242,15 @@ const PredictionDashboard = () => {
                                         </div>
                                     </CardContent>
                                 </Card>
-                            </div>
+                                </motion.div>
+                            </motion.div>
 
                             {/* Daily Summary */}
+                            <motion.div 
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.3, delay: 0.2 }}
+                            >
                             <Card className="bg-white shadow-lg">
                                 <CardHeader className="border-b bg-gray-50 p-6">
                                     <CardTitle className="text-xl text-gray-800">Daily Order Summary - {area}</CardTitle>
@@ -229,12 +267,14 @@ const PredictionDashboard = () => {
                                         ))}
                                     </div>
                                 </CardContent>
-                            </Card>
+                                </Card>
+                                </motion.div>
                         </TabsContent>
                     ))}
                 </Tabs>
             </div>
-        </div>
+            </div>
+            </motion.div>
     );
 }
 
