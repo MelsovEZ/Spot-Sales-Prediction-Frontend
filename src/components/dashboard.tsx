@@ -365,7 +365,7 @@ const PredictionDashboard = () => {
         </div>
         <div className="mt-8">
           <Card className="bg-gray-100 shadow-none border-none">
-            <CardContent className="flex justify-end p-0">
+            <CardContent className="flex justify-end p-0 md:pd-12">
               <LogoutButton />
             </CardContent>
           </Card>
