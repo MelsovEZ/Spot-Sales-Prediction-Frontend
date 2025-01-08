@@ -97,13 +97,20 @@ function DailyOrderDrawer({ date, total, predictions }) {
                                     <ResponsiveContainer width="100%" height="100%">
                                         <BarChart
                                             data={Object.values(orderTypeData)}
-                                            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                                            margin={{ top: 5, right: 10, left: 0, bottom: 60 }}
                                         >
                                             <CartesianGrid strokeDasharray="3 3" />
-                                            <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
-                                            <YAxis />
+                                            <XAxis 
+                                                dataKey="name" 
+                                                angle={-45} 
+                                                textAnchor="end" 
+                                                height={80}
+                                                tick={{ fontSize: 12 }}
+                                                interval={0}
+                                            />
+                                            <YAxis tick={{ fontSize: 12 }} />
                                             <Tooltip />
-                                            <Legend />
+                                            <Legend wrapperStyle={{ fontSize: 12 }} />
                                             <Bar dataKey="Dining" fill="#0088FE" />
                                             <Bar dataKey="Takeaway" fill="#00C49F" />
                                         </BarChart>
