@@ -40,11 +40,9 @@ const InteractiveDailyOrdersChart = ({ area, dailyTotals, predictions }) => {
 
   const chartData = Object.entries(dailyTotals).map(([date, total]) => {
     const dayPredictions = predictions.filter((p) => p.Date === date);
-
     const dining = dayPredictions
       .filter((p) => p.Type_of_Order === 'Dining')
       .reduce((sum, p) => sum + p.Predicted_Orders, 0);
-
     const takeaway = dayPredictions
       .filter((p) => p.Type_of_Order === 'Takeaway')
       .reduce((sum, p) => sum + p.Predicted_Orders, 0);
@@ -61,11 +59,8 @@ const InteractiveDailyOrdersChart = ({ area, dailyTotals, predictions }) => {
   const handleBarClick = (data) => {
     if (data && data.activePayload && data.activePayload[0]) {
       setSelectedDate(data.activePayload[0].payload.date);
-      // Programmatically click the drawer trigger
       const drawerTrigger = document.getElementById('drawer-trigger');
-      if (drawerTrigger) {
-        drawerTrigger.click();
-      }
+      if (drawerTrigger) drawerTrigger.click();
     }
   };
 
@@ -73,39 +68,24 @@ const InteractiveDailyOrdersChart = ({ area, dailyTotals, predictions }) => {
     if (!selectedDate) return null;
     const dateData = chartData.find((d) => d.date === selectedDate);
     if (!dateData) return null;
-
-    // Calculate category totals
     const categoryTotals = dateData.predictions.reduce((acc, curr) => {
       if (!acc[curr.Category]) acc[curr.Category] = 0;
       acc[curr.Category] += curr.Predicted_Orders;
       return acc;
     }, {});
-
     const categoryData = Object.entries(categoryTotals).map(
       ([name, value]) => ({
         name,
         value,
       })
     );
-
-    // Calculate order type data
     const orderTypeData = dateData.predictions.reduce((acc, curr) => {
       const key = `${curr.Item} (${curr.Category})`;
-      if (!acc[key]) {
-        acc[key] = {
-          name: key,
-          Dining: 0,
-          Takeaway: 0,
-        };
-      }
+      if (!acc[key]) acc[key] = { name: key, Dining: 0, Takeaway: 0 };
       acc[key][curr.Type_of_Order] += curr.Predicted_Orders;
       return acc;
     }, {});
-
-    return {
-      categoryData,
-      orderTypeData: Object.values(orderTypeData),
-    };
+    return { categoryData, orderTypeData: Object.values(orderTypeData) };
   };
 
   return (
@@ -122,55 +102,55 @@ const InteractiveDailyOrdersChart = ({ area, dailyTotals, predictions }) => {
             </CardTitle>
           </CardHeader>
           <CardContent className="p-6">
-            <div className="h-96">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={chartData}
-                  margin={{
-                    top: 20,
-                    right: 30,
-                    left: 20,
-                    bottom: 60,
-                  }}
-                  onClick={handleBarClick}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis
-                    dataKey="date"
-                    angle={-45}
-                    textAnchor="end"
-                    height={60}
-                  />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend verticalAlign="top" height={36} />
-                  <Bar
-                    name="Total Orders"
-                    dataKey="total"
-                    fill="#8884d8"
-                    className="cursor-pointer hover:opacity-80"
-                  />
-                  <Bar
-                    name="Dining Orders"
-                    dataKey="dining"
-                    fill="#FFB5B5"
-                    className="cursor-pointer hover:opacity-80"
-                  />
-                  <Bar
-                    name="Takeaway Orders"
-                    dataKey="takeaway"
-                    fill="#B5D8FF"
-                    className="cursor-pointer hover:opacity-80"
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+            <div className="h-96 overflow-x-auto">
+              <div className="min-w-[900px] h-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={chartData}
+                    margin={{
+                      top: 20,
+                      right: 30,
+                      left: 20,
+                      bottom: 60,
+                    }}
+                    onClick={handleBarClick}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                      dataKey="date"
+                      angle={-45}
+                      textAnchor="end"
+                      height={60}
+                    />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend verticalAlign="top" height={36} />
+                    <Bar
+                      name="Total Orders"
+                      dataKey="total"
+                      fill="#8884d8"
+                      className="cursor-pointer hover:opacity-80"
+                    />
+                    <Bar
+                      name="Dining Orders"
+                      dataKey="dining"
+                      fill="#FFB5B5"
+                      className="cursor-pointer hover:opacity-80"
+                    />
+                    <Bar
+                      name="Takeaway Orders"
+                      dataKey="takeaway"
+                      fill="#B5D8FF"
+                      className="cursor-pointer hover:opacity-80"
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Hidden trigger for the drawer */}
         <DrawerTrigger id="drawer-trigger" className="hidden" />
-
         <DrawerContent>
           {selectedDate && getSelectedDateData() && (
             <div className="mx-auto w-full max-w-4xl p-4 sm:p-6">
@@ -221,28 +201,30 @@ const InteractiveDailyOrdersChart = ({ area, dailyTotals, predictions }) => {
                     <CardTitle>Dining vs Takeaway Orders</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="h-64">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          data={getSelectedDateData()?.orderTypeData}
-                          margin={{ top: 5, right: 10, left: 0, bottom: 60 }}
-                        >
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis
-                            dataKey="name"
-                            angle={-45}
-                            textAnchor="end"
-                            height={80}
-                            tick={{ fontSize: 12 }}
-                            interval={0}
-                          />
-                          <YAxis tick={{ fontSize: 12 }} />
-                          <Tooltip />
-                          <Legend wrapperStyle={{ fontSize: 12 }} />
-                          <Bar dataKey="Dining" fill="#0088FE" />
-                          <Bar dataKey="Takeaway" fill="#00C49F" />
-                        </BarChart>
-                      </ResponsiveContainer>
+                    <div className="h-64 overflow-x-auto">
+                      <div className="min-w-[600px] h-full">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <BarChart
+                            data={getSelectedDateData()?.orderTypeData}
+                            margin={{ top: 5, right: 10, left: 0, bottom: 60 }}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis
+                              dataKey="name"
+                              angle={-45}
+                              textAnchor="end"
+                              height={80}
+                              tick={{ fontSize: 12 }}
+                              interval={0}
+                            />
+                            <YAxis tick={{ fontSize: 12 }} />
+                            <Tooltip />
+                            <Legend wrapperStyle={{ fontSize: 12 }} />
+                            <Bar dataKey="Dining" fill="#0088FE" />
+                            <Bar dataKey="Takeaway" fill="#00C49F" />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
