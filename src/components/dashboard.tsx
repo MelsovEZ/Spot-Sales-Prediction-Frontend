@@ -73,17 +73,22 @@ const PredictionDashboard = () => {
       try {
         const predictions = await Promise.all(
           AREAS.map((area) =>
-            fetch('https://spot-sales-prediction-1.onrender.com/predict', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                area: area,
-                target_date: new Date().toISOString().split('T')[0],
-                range: selectedRange,
-              }),
-            }).then((res) => res.json())
+            fetch(
+              process.env.NODE_ENV === 'development'
+                ? 'http://localhost:8000/predict'
+                : 'https://spot-sales-prediction-1.onrender.com/predict',
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  area: area,
+                  target_date: new Date().toISOString().split('T')[0],
+                  range: selectedRange,
+                }),
+              }
+            ).then((res) => res.json())
           )
         );
 
