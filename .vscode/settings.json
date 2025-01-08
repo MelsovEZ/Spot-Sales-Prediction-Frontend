@@ -1,0 +1,11 @@
+{
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 100,
+            "driver": "SQLite",
+            "name": "DB Users",
+            "database": "${workspaceFolder:spot-sales-prediction}/prisma/dev.db"
+        }
+    ]
+}

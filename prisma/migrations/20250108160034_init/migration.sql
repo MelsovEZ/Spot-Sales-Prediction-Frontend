@@ -1,9 +1,11 @@
 -- CreateTable
 CREATE TABLE "User" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "password" TEXT NOT NULL,
     "username" TEXT NOT NULL,
-    "isApproved" BOOLEAN NOT NULL DEFAULT false
+    "isApproved" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
