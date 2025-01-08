@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 
 export const metadata: Metadata = {
-  title: "McDonald's Sales Analytics Dashboard",
+  title: "I'M's Sales Analytics Dashboard",
   description: "Forecasting future demand for products",
 }
 
