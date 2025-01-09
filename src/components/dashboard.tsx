@@ -1,42 +1,26 @@
 'use client';
 import { useState, useEffect } from 'react';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-} from 'recharts';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/tabs';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/select';
+import { Card, CardContent } from '@/components/card';
+import { Tabs, TabsContent } from '@/components/tabs';
 import { PredictionResponse } from '@/types/dashboard-interfaces';
-import { motion } from 'framer-motion';
 import LogoutButton from './logout-button';
 import LoadingDashboard from './loading-dashboard';
 import ErrorDashboard from './error-dashboard';
 import InteractiveDailyOrdersChart from './daily-charts';
+import AreaNavigation from './area-navigation';
+import ChartsSection from './charts-section';
+import DashboardHeader from './dashboard-header';
+import DateRangeInfo from './date-range-info';
+import DashboardLayout from './dashboard-layout';
 
-const AREAS = [
+export const AREAS = [
   'Arcadia Bay',
   'Cyber City',
   'Elysium District',
   'Mystic Falls',
   'Neo Tokyo',
 ];
-const COLORS = [
+export const COLORS = [
   '#0088FE',
   '#00C49F',
   '#FFBB28',
@@ -44,14 +28,14 @@ const COLORS = [
   '#8884d8',
   '#82ca9d',
 ];
-const TIME_RANGES = [
+export const TIME_RANGES = [
   { value: '1d', label: '1 Day' },
   { value: '1w', label: '1 Week' },
   { value: '2w', label: '2 Weeks' },
   { value: '1m', label: '1 Month' },
 ];
 
-const fadeIn = {
+export const fadeIn = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
   exit: { opacity: 0 },
@@ -149,205 +133,43 @@ const PredictionDashboard = () => {
   );
 
   return (
-    <motion.div
-      className="min-h-screen bg-gray-100 px-8 pb-8"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="min-h-screen bg-gray-100 p-8">
-        <div className="max-w-7xl mx-auto space-y-8">
-          <motion.div {...fadeIn} transition={{ duration: 0.3 }}>
-            {/* Header Section */}
-            <Card className="bg-white shadow">
-              <CardContent className="p-6">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-0">
-                  <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
-                    I&apos;M&apos;s Prediction Dashboard
-                  </h1>
-                  <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 w-full md:w-auto">
-                    <Select
-                      value={selectedRange}
-                      onValueChange={setSelectedRange}
-                    >
-                      <SelectTrigger className="w-full md:w-36">
-                        <SelectValue placeholder="Select Range" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {TIME_RANGES.map((range) => (
-                          <SelectItem key={range.value} value={range.value}>
-                            {range.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <motion.div
-                      className="text-base md:text-lg"
-                      initial={{ scale: 0.95 }}
-                      animate={{ scale: 1 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      Total Orders:{' '}
-                      <span className="font-bold text-gray-900">
-                        {totalOrders.toLocaleString()}
-                      </span>
-                    </motion.div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Date Range Card */}
-          <motion.div {...fadeIn} transition={{ duration: 0.3, delay: 0.1 }}>
-            <Card className="bg-white shadow">
-              <CardHeader className="border-b bg-gray-50 p-6">
-                <CardTitle className="text-xl text-gray-800">
-                  Date Range Information
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-6">
-                <p className="text-gray-700">
-                  Showing data from{' '}
-                  <span className="font-medium">
-                    {selectedPredictions.date_range.start_date}
-                  </span>{' '}
-                  to{' '}
-                  <span className="font-medium">
-                    {selectedPredictions.date_range.end_date}
-                  </span>
-                </p>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Area Tabs */}
-          <Tabs
-            defaultValue={selectedArea}
-            onValueChange={setSelectedArea}
-            className="space-y-6"
-          >
-            <motion.div {...fadeIn} transition={{ duration: 0.3, delay: 0.2 }}>
-              <TabsList className="grid grid-cols-1 sm:grid-cols-5 w-full h-full bg-white shadow-md rounded-lg py-4">
-                {AREAS.map((area) => (
-                  <TabsTrigger
-                    key={area}
-                    value={area}
-                    className="mx-4 py-3 px-4 text-sm font-medium data-[state=active]:bg-gray-100 data-[state=active]:text-gray-900"
-                  >
-                    {area}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </motion.div>
-
-            {AREAS.map((area) => (
-              <TabsContent key={area} value={area} className="space-y-6 mt-6">
-                <motion.div
-                  className="grid grid-cols-1 md:grid-cols-2 gap-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.div {...fadeIn} transition={{ duration: 0.3 }}>
-                    {/* Category Chart */}
-                    <Card className="bg-white shadow-lg h-full">
-                      <CardHeader className="border-b bg-gray-50 p-6">
-                        <CardTitle className="text-xl text-gray-800">
-                          Total Orders by Category - {area}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-6">
-                        <div className="h-80">
-                          <ResponsiveContainer width="100%" height="100%">
-                            <PieChart>
-                              <Pie
-                                data={categoryData}
-                                dataKey="value"
-                                nameKey="name"
-                                cx="50%"
-                                cy="50%"
-                                outerRadius={100}
-                                label
-                              >
-                                {categoryData.map((entry, index) => (
-                                  <Cell
-                                    key={entry.name}
-                                    fill={COLORS[index % COLORS.length]}
-                                  />
-                                ))}
-                              </Pie>
-                              <Tooltip />
-                              <Legend verticalAlign="bottom" height={36} />
-                            </PieChart>
-                          </ResponsiveContainer>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-
-                  {/* Order Type Chart */}
-                  <motion.div
-                    {...fadeIn}
-                    transition={{ duration: 0.3, delay: 0.1 }}
-                  >
-                    <Card className="bg-white shadow-lg h-full">
-                      <CardHeader className="border-b bg-gray-50 p-6">
-                        <CardTitle className="text-xl text-gray-800">
-                          Dining vs Takeaway Orders - {area}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-6">
-                        <div className="h-80">
-                          <ResponsiveContainer width="100%" height="100%">
-                            <BarChart
-                              data={Object.values(orderTypeData)}
-                              margin={{
-                                top: 20,
-                                right: 30,
-                                left: 20,
-                                bottom: 120,
-                              }}
-                            >
-                              <CartesianGrid strokeDasharray="3 3" />
-                              <XAxis
-                                dataKey="name"
-                                angle={-45}
-                                textAnchor="end"
-                                height={100}
-                              />
-                              <YAxis />
-                              <Tooltip />
-                              <Legend verticalAlign="top" height={36} />
-                              <Bar dataKey="Dining" fill="#FFB5B5" />
-                              <Bar dataKey="Takeaway" fill="#B5D8FF" />
-                            </BarChart>
-                          </ResponsiveContainer>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                </motion.div>
-
-                {/* Daily Summary */}
-                <InteractiveDailyOrdersChart
-                  area={area}
-                  dailyTotals={areaData[area].daily_totals}
-                  predictions={areaData[area].predictions}
-                />
-              </TabsContent>
-            ))}
-          </Tabs>
-        </div>
-        <div className="mt-8">
-          <Card className="bg-gray-100 shadow-none border-none">
-            <CardContent className="flex justify-end p-0 md:pd-12">
-              <LogoutButton />
-            </CardContent>
-          </Card>
-        </div>
+    <DashboardLayout>
+      <DashboardHeader
+        totalOrders={totalOrders}
+        selectedRange={selectedRange}
+        setSelectedRange={setSelectedRange}
+      />
+      <DateRangeInfo
+        startDate={selectedPredictions.date_range.start_date}
+        endDate={selectedPredictions.date_range.end_date}
+      />
+      <Tabs
+        defaultValue={selectedArea}
+        onValueChange={setSelectedArea}
+        className="space-y-6"
+      >
+        <AreaNavigation />
+        {AREAS.map((area) => (
+          <TabsContent key={area} value={area} className="space-y-6 mt-6">
+            <ChartsSection
+              categoryData={categoryData}
+              orderTypeData={orderTypeData}
+            />
+            <InteractiveDailyOrdersChart
+              dailyTotals={areaData[area].daily_totals}
+              predictions={areaData[area].predictions}
+            />
+          </TabsContent>
+        ))}
+      </Tabs>
+      <div className="mt-8">
+        <Card className="bg-gray-100 shadow-none border-none">
+          <CardContent className="flex justify-end p-0 md:pd-12">
+            <LogoutButton />
+          </CardContent>
+        </Card>
       </div>
-    </motion.div>
+    </DashboardLayout>
   );
 };
 

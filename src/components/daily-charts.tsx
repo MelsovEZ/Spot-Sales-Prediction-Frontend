@@ -35,7 +35,7 @@ const COLORS = [
   '#82ca9d',
 ];
 
-const InteractiveDailyOrdersChart = ({ area, dailyTotals, predictions }) => {
+const InteractiveDailyOrdersChart = ({ dailyTotals, predictions }) => {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const chartData = Object.entries(dailyTotals).map(([date, total]) => {
@@ -98,12 +98,12 @@ const InteractiveDailyOrdersChart = ({ area, dailyTotals, predictions }) => {
         <Card className="bg-white shadow-lg">
           <CardHeader className="border-b bg-gray-50 p-6">
             <CardTitle className="text-xl text-gray-800">
-              Daily Order Summary - {area}
+              Daily Order Summary
             </CardTitle>
           </CardHeader>
           <CardContent className="p-6">
             <div className="h-96 overflow-x-auto">
-              <div className="min-w-[900px] h-full">
+              <div className="min-w-[300px] h-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={chartData}
@@ -124,7 +124,7 @@ const InteractiveDailyOrdersChart = ({ area, dailyTotals, predictions }) => {
                     />
                     <YAxis />
                     <Tooltip />
-                    <Legend verticalAlign="top" height={36} />
+                    <Legend verticalAlign="top" height={40} />
                     <Bar
                       name="Total Orders"
                       dataKey="total"
@@ -155,14 +155,16 @@ const InteractiveDailyOrdersChart = ({ area, dailyTotals, predictions }) => {
           {selectedDate && getSelectedDateData() && (
             <div className="mx-auto w-full max-w-4xl p-4 sm:p-6">
               <DrawerHeader>
-                <DrawerTitle>Daily Order Details - {selectedDate}</DrawerTitle>
+                <DrawerTitle>
+                  Daily Order Details for {selectedDate}
+                </DrawerTitle>
                 <DrawerDescription>
                   Total Orders: {dailyTotals[selectedDate]?.toLocaleString()}
                 </DrawerDescription>
               </DrawerHeader>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                <Card>
+                <Card className="max-h-[400px]">
                   <CardHeader>
                     <CardTitle>Total Orders by Category</CardTitle>
                   </CardHeader>
@@ -202,7 +204,7 @@ const InteractiveDailyOrdersChart = ({ area, dailyTotals, predictions }) => {
                   </CardHeader>
                   <CardContent>
                     <div className="h-64 overflow-x-auto">
-                      <div className="min-w-[600px] h-full">
+                      <div className="min-w-[400px] h-full">
                         <ResponsiveContainer width="100%" height="100%">
                           <BarChart
                             data={getSelectedDateData()?.orderTypeData}
