@@ -1,53 +1,78 @@
 # I&apos;M&apos;s Prediction Dashboard
 
-This is a frontend dashboard for visualizing restaurant order predictions. It
-provides analytics and insights into demand forecasts.
+Это админ-дэшборд для визуализации прогнозов заказов в ресторанах. Он предоставляет аналитику и данные о прогнозах спроса.
 
-## Features
+## Возможности
 
-- Interactive dashboard with animations.
-- View demand predictions for different areas and time ranges.
-- Charts for category totals, order types, and daily demand.
-- Authentication with credentials; only approved users can access the dashboard.
-- First register, then approve it with prisma studio and voilà.
+- Интерактивный дэшборд с анимациями.
+- Просмотр прогнозов спроса для различных мест и временных периодов.
+- Графики по общим категориям, типам заказов и ежедневному спросу.
+- Возможность загрузить свой CSV файл с данными.
+- Аутентификация с использованием учетных данныхю
 
-## Requirements
+## Требования
 
 - Node.js 18+
-- Libraries: `react`, `next.js`, `framer-motion`, `recharts`, `next-auth`
+- Библиотеки: `react`, `next.js`, `framer-motion`, `recharts`, `next-auth`
 
-## Installation
+## Установка
 
-1. Clone the repository:
+1. Клонируйте репозиторий:
 
    ```bash
    git clone https://github.com/MelsovEZ/Spot-Sales-Prediction-Frontend.git
    cd Spot-Sales-Prediction-Frontend
    ```
 
-2. Install dependencies:
+2. Установите зависимости:
 
    ```bash
    npm install
    ```
 
-3. Set up the environment: Create a `.env` file and add:
+3. Настройте окружение: создайте файл `.env` и добавьте:
 
    ```
    DATABASE_URL=
    NEXTAUTH_SECRET=
    ```
 
-4. Run the application:
+4. Запустите приложение:
 
    ```bash
    npm run dev
    ```
 
-5. Access the app at `http://localhost:3000`.
+5. Откройте приложение по адресу `http://localhost:3000`.
 
-## Usage
+## Использование
 
-- Select a time range (e.g., 1 day, 1 week).
-- Browse data for different areas via tabs.
-- View charts for categories and order types.
+- Выберите временной диапазон (например, 1 день или 1 неделя).
+- Просматривайте данные для различных мест через вкладки.
+- Изучайте графики по категориям и типам заказов.
+
+---
+
+### Возможные проблемы при разработке
+
+1. **Настройка аутентификации через `next-auth`**:
+
+   - Ошибки при конфигурации токенов и секретных ключей (неправильный `NEXTAUTH_SECRET` или полное его отсутствие в `.env` файле).
+   - Проблемы с Тайпскриптом и NextAuth.
+
+2. **Создание графиков с использованием `recharts`**:
+
+   - Ошибки при передаче данных в компоненты графиков из-за неправильной структуры данных или отсутствия нужных полей.
+   - Некорректное отображение данных для больших временных диапазонов из-за перегрузки осей или слишком большого количества меток.
+   - Проблемы с адаптацией интерфейса для мобильных устройств, где графики отображалсь некорректно :skull_emoji:
+   - Неправильное использование данных.
+
+3. **Проблемы с самим `Next.js` или `React`**:
+
+   - Ошибки гидрации (`Hydration failed`).
+   - Траблы при передаче пропсов.
+
+4. **Оптимизация производительности**:
+   - Увеличение времени загрузки страницы из-за слишком тяжелых анимаций (из-за анимации графиков).
+   - Неправильная структура компонентов.
+   - Отсутствие кеширования данных.
