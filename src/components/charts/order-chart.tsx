@@ -9,14 +9,14 @@ import {
   Legend,
   Bar,
 } from 'recharts';
-import { Card, CardHeader, CardTitle, CardContent } from './card';
-import { fadeIn } from './dashboard';
+import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
+import fadeIn from '../dashboard/dashboard-page';
 
 function OrderTypeChart({ data }) {
   return (
     <motion.div {...fadeIn} transition={{ duration: 0.3, delay: 0.1 }}>
-      <Card className="bg-white shadow-lg">
-        <CardHeader className="border-b bg-gray-50 p-6">
+      <Card className="bg-[#464756] ">
+        <CardHeader className="border-b bg-[#464756] p-6">
           <CardTitle className="text-xl text-gray-800">
             Dining vs Takeaway Orders
           </CardTitle>
@@ -39,8 +39,8 @@ function OrderTypeChart({ data }) {
                   <YAxis />
                   <Tooltip />
                   <Legend verticalAlign="top" height={36} />
-                  <Bar dataKey="Dining" fill="#FFB5B5" />
-                  <Bar dataKey="Takeaway" fill="#B5D8FF" />
+                  <Bar dataKey="Dining" fill="#8884d8" />
+                  <Bar dataKey="Takeaway" fill="#82ca9d" />
                 </BarChart>
               </ResponsiveContainer>
             </div>

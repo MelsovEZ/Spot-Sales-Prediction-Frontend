@@ -7,14 +7,14 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
-import { Card, CardHeader, CardTitle, CardContent } from './card';
-import { fadeIn, COLORS } from './dashboard';
+import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
+import fadeIn, { COLORS } from '../dashboard/dashboard-page';
 
 function CategoryChart({ data }) {
   return (
     <motion.div {...fadeIn} transition={{ duration: 0.3 }}>
-      <Card className="bg-white shadow-lg h-full">
-        <CardHeader className="border-b bg-gray-50 p-6">
+      <Card className="bg-[#464756]  h-full">
+        <CardHeader className="border-b bg-[#464756] p-6">
           <CardTitle className="text-xl text-gray-800">
             Total Orders by Category
           </CardTitle>
